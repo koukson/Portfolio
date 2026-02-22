@@ -27,7 +27,7 @@ const Projects = () => {
   return (
     <div   className="min-h-screen justify  justify-center"    id="Projects">
         <div className="translate-y-40">
-        <Title title={'MES PROJECTS'}/>
+        <Title title={'MES PROJETS'}/>
         </div>
         <div className="translate-y-50">
         <div className="grid md:grid-cols-3 gap-4">
