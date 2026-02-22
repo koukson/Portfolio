@@ -1,7 +1,6 @@
 import Title from "./Title"
 
 import img1 from'../assets/projects/1.png'
-import img2 from'../assets/projects/2.png'
 
 import { Github, Video } from "lucide-react";
 
@@ -18,14 +17,7 @@ const projects =[
         repoLink:'#',
         image: img1,
     },
-     {
-        id:2,
-        title:'Portfolio responsive',
-        description:"L'objectif est d'approfondir les réalisations du personnage et valoriser ses compétences.",
-        technologies:['React js','tailwindcss'],
-        
-        image: img2,
-    },
+    
      
 ];
 
