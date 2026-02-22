@@ -3,6 +3,7 @@ import img from "../assets/img.png"
 
 const home = () => {
   return (
+    <div className="translate-y-10">
     <div className="min-h-screen flex items-center justify-center"    id="home">
       <div className="flex flex-col-reverse md:flex-row justify-center items-center md:my-32 my-10" >
         <div className="flex flex-col ">
@@ -23,6 +24,7 @@ const home = () => {
           <img src={img} alt="" className="w-96 h-96 object-cover border-8 border-accent shadow-xl"  style={{ borderRadius: '30% 70% 70% 30% / 67% 62% 38% 33%' }}/>
         </div>
       </div>
+    </div>
     </div>
   )
 }
