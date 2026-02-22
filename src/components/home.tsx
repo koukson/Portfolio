@@ -9,7 +9,7 @@ const home = () => {
             <h1 className="text-5xl md:text-6xl font-bold text-center md:text-left mt-4 md:mt-0">Bonjour , <br/> je suis {""}<span className="text-accent">JIE TRAORE</span></h1>
             <p className="my-4 text-md text-center md:text-left"> Je suis un développeur fullstack <br/> début mon expérience en utilisant react  <br/> et node.js, aussi flutter pour le mobile.<br/> Contactez-moi si vous avez besoin de mes services.</p>
             <div className="flex items-center space-x-4">
-              <a href="*" download className=" btn btn-base-content md:w-fit "> < Download/> Télécharger CV </a>  
+              <a href="*"   target="_blank" rel="noopener noreferrer" className=" btn btn-base-content md:w-fit "> < Download/> Télécharger CV </a>  
               <a href="mailto:traorejie4@gmail.com"  className=" btn btn-accent md:w-fit "> <Mail className="w-5 h-5"/> Contactez-moi </a>
             </div>  
 

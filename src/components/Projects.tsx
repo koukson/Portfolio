@@ -2,6 +2,7 @@ import Title from "./Title"
 
 import img1 from'../assets/projects/1.png'
 
+
 import { Github, Video } from "lucide-react";
 
 
@@ -17,8 +18,6 @@ const projects =[
         repoLink:'#',
         image: img1,
     },
-    
-     
 ];
 
 
