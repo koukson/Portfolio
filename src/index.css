@@ -1,5 +1,308 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-
   themes: all;
-};
+}
+
+/* Custom CSS Properties for 2026 Theme */
+:root {
+  --background: #080C14;
+  --foreground: #F1F5F9;
+  --primary: #00F5FF;
+  --secondary: #D946EF;
+  --accent: #8B5CF6;
+  --muted: rgba(255, 255, 255, 0.04);
+  --glass: rgba(15, 23, 42, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.5);
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+}
+
+/* Light Theme Overrides */
+[data-theme='light'] {
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+  --primary: #0EA5E9;
+  --secondary: #DB2777;
+  --accent: #7C3AED;
+  --muted: rgba(15, 23, 42, 0.04);
+  --glass: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 8px 16px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 16px 32px rgba(15, 23, 42, 0.12);
+}
+
+/* Tailwind CSS v4 Theme Configurations */
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-primary-custom: var(--primary);
+  --color-secondary-custom: var(--secondary);
+  --color-glass-border: var(--glass-border);
+  --color-glass-bg: var(--glass);
+  --font-sans: 'Outfit', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+}
+
+/* Global Settings */
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+}
+
+body {
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-x: hidden;
+}
+
+/* Animation Keyframes */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(1deg); }
+}
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+@keyframes shine {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes float-particle {
+  0% { transform: translateY(0px) translateX(0px); }
+  50% { transform: translateY(-20px) translateX(10px); }
+  100% { transform: translateY(0px) translateX(0px); }
+}
+@keyframes pulse-particle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 0.8; transform: scale(1); }
+}
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes border-glow {
+  0%, 100% { border-color: rgba(139, 92, 246, 0.2); }
+  50% { border-color: rgba(0, 245, 255, 0.6); }
+}
+
+/* Utility classes */
+/* Glassmorphism Utility */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.glass-enhanced {
+  background: var(--glass);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-enhanced:hover {
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: var(--shadow-lg), 0 0 20px rgba(139, 92, 246, 0.15);
+}
+
+/* Button Variations */
+.btn-primary {
+  @apply bg-primary/10 hover:bg-primary/25 text-primary border border-primary/20 hover:border-primary/40;
+}
+.btn-secondary {
+  @apply bg-secondary/10 hover:bg-secondary/25 text-secondary border border-secondary/20 hover:border-secondary/40;
+}
+.btn-accent {
+  @apply bg-accent/20 hover:bg-accent/35 text-white border border-accent/30 hover:border-accent/50 shadow-md shadow-accent/10;
+}
+
+/* Interactive Effects */
+.hover-lift {
+  @apply transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg;
+}
+.hover-shine {
+  position: relative;
+  overflow: hidden;
+}
+.hover-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  transform: rotate(30deg);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-shine:hover::after {
+  transform: rotate(30deg) translateX(100%);
+}
+.hover-scale {
+  @apply transition-transform duration-200 hover:scale-[1.03];
+}
+
+.particle {
+  position: absolute;
+  background: var(--accent);
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: float-particle 8s ease-in-out infinite, pulse-particle 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.floating-pointer {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Gradient text animation */
+.bg-gradient-text {
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    var(--primary),
+    var(--secondary),
+    var(--accent)
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.animate-gradient-x {
+  animation: gradient-shift 4s ease infinite;
+}
+
+/* Animation Utility Classes */
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+.animate-shine {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shine 2.5s linear infinite;
+}
+.animate-slide-up {
+  animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+.glowing-border {
+  animation: border-glow 4s ease-in-out infinite;
+}
+
+
+/* Form Styles */
+.input-field {
+  @apply w-full px-4 py-3 bg-white/[0.03] dark:bg-black/[0.2] border border-white/10 rounded-xl focus:outline-none focus:border-accent focus:bg-white/[0.06] text-foreground transition-all duration-300;
+}
+.input-field:focus {
+  @apply ring-2 ring-accent/30 border-accent/50 shadow-md shadow-accent/5;
+}
+.input-field::placeholder {
+  color: currentColor;
+  opacity: 0.4;
+}
+.textarea-field {
+  @apply w-full px-4 py-3 bg-white/[0.03] dark:bg-black/[0.2] border border-white/10 rounded-xl resize-none focus:outline-none focus:border-accent focus:bg-white/[0.06] text-foreground h-[120px] transition-all duration-300;
+}
+.textarea-field:focus {
+  @apply ring-2 ring-accent/30 border-accent/50 shadow-md shadow-accent/5;
+}
+.textarea-field::placeholder {
+  color: currentColor;
+  opacity: 0.4;
+}
+
+/* Custom noise pattern overlay */
+.noise-bg {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.015;
+}
+
+/* Bento Grid classes */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.25rem;
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(4, 6, 10, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 45;
+}
+
+/* Reduce Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .particle, .floating-pointer, .bg-gradient-text, .glowing-border {
+    animation: none !important;
+  }
+}
