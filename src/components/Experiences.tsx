@@ -13,15 +13,15 @@ const information = [
   },
   {
     id: "2",
-    title: "",
-    period: "",
-    description: [],
+    title: "LICENCE EN IGL (INFORMATIQUE GENIE LOGICIEL) ",
+    period: "2023 - 2026",
+    description: ["Université de Technologies d'Abidjan, Côte d'Ivoire", ],
   },
   {
     id: "3",
-    title: "",
-    period: "",
-    description: [],
+    title: "BACCALAURÉAT SCIENTIFIQUE SERIE D",
+    period: "2022 - 2023",
+    description: ["Goupe Scolaire Michel Vako, Abidjan, Côte d'Ivoire"],
   },
 ];
 
