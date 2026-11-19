@@ -1,67 +1,27 @@
 import Title from "./Title";
-import img from '../assets/img.png';
-import { CalendarSync, LetterText, GlobeLock, CheckCircle2, Terminal, Code2 } from "lucide-react";
+import img from "../assets/img.png";
+import { Code2, Terminal, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-// Import tech images
-import imgHTML from "../assets/techno/html.png";
-import imgCSS from "../assets/techno/css.png";
-import imgJS from "../assets/techno/js.png";
-import imgREACT from "../assets/techno/react.png";
-import imgNODE from "../assets/techno/node-js.png";
-import imgFLUTTER from "../assets/techno/flutter.png";
-import imgNEXT from "../assets/techno/next-js.webp";
-import imgCLAUDE from "../assets/techno/claude.webp";
-
-
-const aboutSections = [
-  {
-    id: 1,
-    title: "Développeur Frontend",
-    description: "Conception d'interfaces utilisateur modernes, ergonomiques et réactives avec React et Tailwind CSS.",
-    extendedDescription: "Je crée des architectures front-end robustes, scalables et faciles à maintenir. Je prête une attention rigoureuse à l'accessibilité, au responsive design, à l'optimisation du SEO et au maintien de performances d'affichage élevées.",
-    icon: <LetterText className="text-primary-custom w-6 h-6" />,
-    proficiency: 85,
-    colorClass: "from-primary-custom/20 to-accent/10"
-  },
-  {
-    id: 2,
-    title: "Développeur Backend",
-    description: "Création d'API RESTful et gestion de bases de données sécurisées avec Node.js, Express et SQL/NoSQL.",
-    extendedDescription: "Je construis des serveurs backend stables et véloces. J'intègre des systèmes d'authentification sécurisés (JWT/OAuth), gère les architectures MVC et structure la modélisation des données pour les applications complexes.",
-    icon: <CalendarSync className="text-secondary-custom w-6 h-6" />,
-    proficiency: 75,
-    colorClass: "from-secondary-custom/20 to-accent/10"
-  },
-{
-    id: 3,
-    title: "Cybersécurité",
-    description: "Passionné par la sécurité applicative, l'analyse des menaces OWASP et la sécurisation des données.",
-    extendedDescription: "J'audite la vulnérabilité des applications web pour neutraliser les failles de sécurité classiques (injections SQL, XSS, CSRF). Je me forme en continu via des plateformes de CTF (Root-Me, TryHackMe) pour concevoir du code nativement sécurisé.",
-    icon: <GlobeLock className="text-accent w-6 h-6" />,
-    proficiency: 50,
-    colorClass: "from-accent/20 to-secondary-custom/10"
-  },
-];
-
-const techStack = [
-  { name: "React.js", img: imgREACT, glowColor: "rgba(34, 211, 238, 0.4)", borderHover: "hover:border-cyan-400/50" },
-  { name: "Next.js", img: imgNEXT, glowColor: "rgba(192, 132, 252, 0.4)", borderHover: "hover:border-purple-400/50" },
-  { name: "Node.js", img: imgNODE, glowColor: "rgba(74, 222, 128, 0.4)", borderHover: "hover:border-green-400/50" },
-  { name: "Flutter", img: imgFLUTTER, glowColor: "rgba(56, 189, 248, 0.4)", borderHover: "hover:border-sky-400/50" },
-  { name: "JavaScript", img: imgJS, glowColor: "rgba(250, 204, 21, 0.4)", borderHover: "hover:border-yellow-400/50" },
-  { name: "CSS3", img: imgCSS, glowColor: "rgba(96, 165, 250, 0.4)", borderHover: "hover:border-blue-400/50" },
-  { name: "HTML5", img: imgHTML, glowColor: "rgba(249, 115, 22, 0.4)", borderHover: "hover:border-orange-400/50" },
-  { name: "Claude AI", img: imgCLAUDE, glowColor: "rgba(255, 255, 255, 0.4)", borderHover: "hover:border-white/50" },
-];
+import { skillCategories, renderIcon } from "../data/skills";
+import { techStack } from "../data/techStack";
 
 const About = () => {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [expandedCategoryId, setExpandedCategoryId] = useState<string | null>(null);
+  const [expandedSkillIndex, setExpandedSkillIndex] = useState<number | null>(null);
 
-  const toggleExpand = (index: number) => {
-    setExpandedIndex(expandedIndex === index ? null : index);
+  const toggleCategory = (id: string) => {
+    setExpandedCategoryId(expandedCategoryId === id ? null : id);
   };
+
+  const toggleSkill = (index: number) => {
+    setExpandedSkillIndex(expandedSkillIndex === index ? null : index);
+  };
+
+  // Aplatir toutes les compétences avec leur index global pour l'expand
+  const allSkills = skillCategories.flatMap((cat) =>
+    cat.skills.map((skill) => ({ ...skill, categoryId: cat.id, categoryName: cat.name }))
+  );
 
   return (
     <motion.div
@@ -72,15 +32,15 @@ const About = () => {
       id="About"
     >
       <div className="w-full max-w-6xl mb-12">
-        <Title title="A PROPOS ME" gradient={true} />
+        <Title title="À PROPOS DE MOI" gradient={true} />
         <p className="text-center text-muted-foreground -mt-2 max-w-xl mx-auto text-sm sm:text-base">
-          Découvrez mon profil, mes compétences techniques majeures et les domaines dans lesquels j'excelle au quotidien.
+          Découvrez mon profil, mes domaines d'expertise et les technologies que j'utilise au quotidien.
         </p>
       </div>
 
       {/* Bento Grid Container */}
       <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* Card 1: Main Biography Presentation (Large) */}
         <motion.div
           whileHover={{ y: -4 }}
@@ -95,13 +55,16 @@ const About = () => {
               Développeur Full-Stack & Explorateur Tech
             </h3>
             <p className="text-foreground/80 font-light leading-relaxed text-sm sm:text-base">
-              Je suis un développeur passionné par la résolution de problèmes et la création d'expériences numériques élégantes. Mon but est d'unir l'art du code avec une ergonomie intuitive, assurant des performances optimales à l'échelle.
+              Je suis un développeur passionné par la résolution de problèmes et la création d'expériences numériques élégantes.
+              Mon but est d'unir l'art du code avec une ergonomie intuitive, assurant des performances optimales à l'échelle.
             </p>
             <p className="text-foreground/80 font-light leading-relaxed text-sm sm:text-base">
-             Je combine une veille technologique active (frameworks hybrides, sécurité globale) avec l'usage d'outils d'IA pour accélérer l'analyse, la génération de tests et la détection de vulnérabilités, garantissant ainsi des applications plus robustes, maintenables et sécurisées.
+              Je combine une veille technologique active (frameworks hybrides, sécurité globale, infrastructure as code)
+              avec l'usage d'outils d'IA pour accélérer l'analyse, la génération de tests et la détection de vulnérabilités,
+              garantissant ainsi des applications plus robustes, maintenables et sécurisées.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-6 border-t border-white/5 mt-6 relative z-10">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-primary-custom flex-shrink-0" />
@@ -116,7 +79,7 @@ const About = () => {
               <span className="text-xs sm:text-sm text-foreground/80">Sécurité Native</span>
             </div>
           </div>
-          
+
           {/* Subtle decoration vector */}
           <div className="absolute right-0 bottom-0 w-24 h-24 bg-accent/5 rounded-full blur-2xl -z-10" />
         </motion.div>
@@ -133,12 +96,12 @@ const About = () => {
 
           <div className="flex flex-col space-y-6 my-6">
             <div className="flex items-baseline gap-2">
-              <span className="text-5xl font-black text-primary-custom tracking-tight">1+</span>
+              <span className="text-5xl font-black text-primary-custom tracking-tight">2+</span>
               <span className="text-sm font-semibold text-foreground/75">Années d'Expérience</span>
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-5xl font-black text-secondary-custom tracking-tight">2+</span>
-              <span className="text-sm font-semibold text-foreground/75">Projets Réalisés</span>
+              <span className="text-5xl font-black text-secondary-custom tracking-tight">{allSkills.length}+</span>
+              <span className="text-sm font-semibold text-foreground/75">Compétences Répertoriées</span>
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-5xl font-black text-accent tracking-tight">100%</span>
@@ -168,11 +131,11 @@ const About = () => {
           <h4 className="text-xl font-bold text-foreground">Jie Traoré</h4>
           <p className="text-xs text-accent font-semibold tracking-wider uppercase mt-1">Abidjan, Côte d'Ivoire</p>
           <p className="text-xs text-muted-foreground max-w-[200px] mt-2 leading-relaxed">
-            Développeur d'applications web & mobiles, passionné par l'innovation logicielle.
+            Développeur Full-Stack, Admin Système & Passionné Sécurité
           </p>
         </motion.div>
 
-        {/* Card 4: Technological Stack / Badges (Large) */}
+        {/* Card 4: Technological Stack / Badges (Large) - Maintenant data-driven */}
         <motion.div
           whileHover={{ y: -4 }}
           className="lg:col-span-2 glass-enhanced p-8 rounded-3xl flex flex-col justify-between border-white/5"
@@ -186,20 +149,18 @@ const About = () => {
               Mes Outils de Prédilection
             </h3>
             <p className="text-foreground/75 font-light text-sm sm:text-base">
-              Voici les technologies principales que j'utilise régulièrement pour concevoir mes applications. Survolez-les pour voir leurs couleurs !
+              Voici les technologies principales que j'utilise régulièrement. Survolez-les pour voir leurs couleurs !
             </p>
-            
-            {/* Tech Badges Container */}
+
+            {/* Tech Badges Container - Data-driven from techStack.ts */}
             <div className="flex flex-wrap gap-3 pt-4">
               {techStack.map((tech) => (
                 <motion.div
-                  key={tech.name}
+                  key={tech.id}
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   className={`flex items-center gap-2.5 px-4 py-2.5 bg-white/[0.03] dark:bg-black/15 border border-white/5 rounded-2xl cursor-default transition-all duration-300 ${tech.borderHover}`}
-                  style={{
-                    boxShadow: "none"
-                  }}
+                  style={{ boxShadow: "none" }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.boxShadow = `0 0 15px ${tech.glowColor}`;
                   }}
@@ -208,7 +169,7 @@ const About = () => {
                   }}
                 >
                   <img
-                    src={tech.img}
+                    src={tech.image}
                     alt={tech.name}
                     className="w-5 h-5 object-contain"
                   />
@@ -219,80 +180,143 @@ const About = () => {
           </div>
         </motion.div>
 
-        {/* Card 5: Core Fields of Expertise (Span Columns) */}
-        <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {aboutSections.map((section, index) => (
+        {/* Card 5: Core Fields of Expertise - Maintenant data-driven depuis skills.ts */}
+        <div className="lg:col-span-3 space-y-6">
+          {skillCategories.map((category, catIndex) => (
             <motion.div
-              key={section.id}
-              whileHover={{ y: -6 }}
-              className="glass-enhanced p-6 rounded-3xl flex flex-col justify-between border-white/5 bg-gradient-to-b from-transparent to-white/[0.01] hover:to-white/[0.03] duration-300 group"
+              key={category.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: catIndex * 0.05, duration: 0.5 }}
+              className="glass-enhanced rounded-3xl border-white/5 overflow-hidden"
             >
-              <div className="space-y-4">
-                {/* Header: Icon + Title */}
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-white/5 dark:bg-black/20 border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    {section.icon}
-                  </div>
-                  <h3 className="text-lg font-black text-foreground group-hover:text-accent transition-colors duration-300 leading-snug">
-                    {section.title}
-                  </h3>
+              {/* Category Header - Clickable pour expand/reduce */}
+              <button
+                type="button"
+                onClick={() => toggleCategory(category.id)}
+                className="w-full p-6 flex items-center gap-4 text-left hover:bg-white/[0.02] transition-colors focus:outline-none focus:ring-2 focus:ring-accent/30 focus:ring-offset-2 focus:ring-offset-background"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-white/5 dark:bg-black/20 border border-white/10 flex items-center justify-center flex-shrink-0">
+                  {renderIcon(category.icon, { className: "w-6 h-6" })}
                 </div>
-
-                <p className="text-sm text-foreground/75 leading-relaxed font-light min-h-[50px]">
-                  {section.description}
-                </p>
-
-                {/* Progress bar with fix */}
-                <div className="space-y-1.5 pt-2">
-                  <div className="flex justify-between text-xs font-bold text-muted-foreground/80">
-                    <span>Niveau de Maîtrise</span>
-                    <span className="text-accent">{section.proficiency}%</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <h3 className="text-lg font-black text-foreground leading-snug">{category.name}</h3>
+                    <span className="px-2 py-0.5 text-xs font-semibold text-accent bg-accent/10 border border-accent/20 rounded-full">
+                      {category.skills.length} compétences
+                    </span>
                   </div>
-                  <div className="w-full h-1.5 bg-white/5 dark:bg-black/20 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-accent rounded-full transition-all duration-1000 ease-out"
-                      style={{ width: `${section.proficiency}%` }}
-                    />
-                  </div>
+                  <p className="text-sm text-foreground/60 font-light mt-1">{category.description}</p>
                 </div>
-              </div>
-
-              {/* Expander component */}
-              <div className="mt-4 pt-4 border-t border-white/5">
-                <button
-                  type="button"
-                  onClick={() => toggleExpand(index)}
-                  className="text-xs font-extrabold text-accent uppercase tracking-wider hover:underline transition-all flex items-center gap-1.5 cursor-pointer"
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2.5}
+                  stroke="currentColor"
+                  className={`w-5 h-5 text-muted-foreground flex-shrink-0 transition-transform duration-300 ${expandedCategoryId === category.id ? 'rotate-180' : 'rotate-0'}`}
                 >
-                  {expandedIndex === index ? 'Réduire' : 'En savoir plus'}
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    strokeWidth={2.5} 
-                    stroke="currentColor" 
-                    className={`w-3.5 h-3.5 transition-transform duration-300 ${expandedIndex === index ? 'rotate-180' : 'rotate-0'}`}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </button>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
 
-                <AnimatePresence>
-                  {expandedIndex === index && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <p className="mt-3 text-xs text-muted-foreground leading-relaxed pt-1 font-light">
-                        {section.extendedDescription}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+              {/* Expandable Skills List */}
+              <AnimatePresence>
+                {expandedCategoryId === category.id && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: "easeInOut" }}
+                    className="overflow-hidden border-t border-white/5"
+                  >
+                    <div className="p-6 space-y-4">
+                      {category.skills.map((skill, skillIndex) => {
+                        const globalIndex = allSkills.findIndex(s => s.id === skill.id);
+                        return (
+                          <motion.div
+                            key={skill.id}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: skillIndex * 0.03, duration: 0.3 }}
+                            className="group"
+                          >
+                            {/* Skill Header */}
+                            <div className="flex items-start gap-4">
+                              <div className="w-10 h-10 rounded-xl bg-white/5 dark:bg-black/20 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                                {renderIcon(skill.icon, { className: "w-5 h-5" })}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-3 flex-wrap">
+                                  <h4 className="font-bold text-foreground group-hover:text-accent transition-colors">{skill.name}</h4>
+                                  {skill.featured && (
+                                    <span className="px-2 py-0.5 text-[10px] font-extrabold text-accent bg-accent/10 border border-accent/20 rounded-full uppercase tracking-wider">
+                                      Vedette
+                                    </span>
+                                  )}
+                                </div>
+                                <p className="text-sm text-foreground/70 font-light mt-1 line-clamp-2">{skill.description}</p>
+
+                                {/* Progress Bar */}
+                                <div className="mt-3 space-y-1.5">
+                                  <div className="flex justify-between text-xs font-bold text-muted-foreground/80">
+                                    <span>Maîtrise</span>
+                                    <span className="text-accent">{skill.proficiency}%</span>
+                                  </div>
+                                  <div className="w-full h-1.5 bg-white/5 dark:bg-black/20 rounded-full overflow-hidden">
+                                    <div
+                                      className="h-full bg-accent rounded-full transition-all duration-1000 ease-out"
+                                      style={{ width: `${skill.proficiency}%` }}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Expand Button for Extended Description */}
+                              {skill.extendedDescription && (
+                                <button
+                                  type="button"
+                                  onClick={() => toggleSkill(globalIndex)}
+                                  className="flex-shrink-0 p-2 text-muted-foreground hover:text-accent transition-colors"
+                                  aria-label={expandedSkillIndex === globalIndex ? `Réduire ${skill.name}` : `Étendre ${skill.name}`}
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={2.5}
+                                    stroke="currentColor"
+                                    className={`w-4 h-4 transition-transform duration-300 ${expandedSkillIndex === globalIndex ? 'rotate-180' : 'rotate-0'}`}
+                                  >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                  </svg>
+                                </button>
+                              )}
+                            </div>
+
+                            {/* Extended Description */}
+                            <AnimatePresence>
+                              {expandedSkillIndex === globalIndex && skill.extendedDescription && (
+                                <motion.div
+                                  initial={{ height: 0, opacity: 0, marginTop: -8 }}
+                                  animate={{ height: 'auto', opacity: 1, marginTop: 0 }}
+                                  exit={{ height: 0, opacity: 0, marginTop: -8 }}
+                                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                                  className="overflow-hidden ml-14 border-l-2 border-accent/20 pl-4"
+                                >
+                                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed font-light">
+                                    {skill.extendedDescription}
+                                  </p>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
         </div>

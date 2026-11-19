@@ -2,6 +2,7 @@ import { Container, Moon, Sun, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useTheme } from "../theme/themeContext";
+import { siteConfig } from "../data/siteConfig";
 
 const Navbar = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -32,13 +33,7 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { href: "#home", label: "ACCUEIL" },
-    { href: "#About", label: "A PROPOS" },
-    { href: "#Experiences", label: "PARCOURS" },
-    { href: "#Projects", label: "PROJETS" },
-    { href: "#Contact", label: "CONTACT" },
-  ];
+  const navLinks = siteConfig.navigation;
 
   return (
     <>
@@ -64,8 +59,8 @@ const Navbar = () => {
               <Container className="w-5 h-5" />
             </motion.div>
             <div className="flex flex-col leading-none">
-              <span className="text-accent font-black tracking-wider text-xl">JT</span>
-              <span className="text-[10px] text-muted-foreground font-semibold tracking-widest">DEV</span>
+              <span className="text-accent font-black tracking-wider text-xl">{siteConfig.shortName}</span>
+              <span className="text-[10px] text-muted-foreground font-semibold tracking-widest">{siteConfig.name.split("DEV ")[1] || "DEV"}</span>
             </div>
           </a>
 

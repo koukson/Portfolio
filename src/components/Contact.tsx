@@ -2,6 +2,7 @@ import { Mail, Github, Linkedin, Loader, Send } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Title from "./Title";
+import { siteConfig } from "../data/siteConfig";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -24,15 +25,21 @@ const Contact = () => {
 
     // Simulate sending email
     setTimeout(() => {
-      const mailtoLink = `mailto:traorejie4@gmail.com?subject=${encodeURIComponent(
-        formData.subject || "Message depuis le portfolio"
-      )}&body=${encodeURIComponent(
-        `Nom: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-      )}`;
+      const subject = formData.subject || "Message depuis le portfolio";
+      const body = `Nom: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`;
 
+      const mailtoLink = `mailto:${siteConfig.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const gmailWebLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${siteConfig.email}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      // Try native mailto first
       window.location.href = mailtoLink;
       setShowSuccess(true);
       setIsSubmitting(false);
+
+      // Fallback: if user is still here after 1.5s, mailto likely didn't work → open Gmail web
+      setTimeout(() => {
+        window.open(gmailWebLink, '_blank', 'noopener,noreferrer');
+      }, 1500);
 
       // Reset form after delay
       setTimeout(() => {
@@ -43,11 +50,11 @@ const Contact = () => {
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ y: 30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 1, delay: 0.2 }}
-      className="min-h-screen flex flex-col items-center justify-center py-20 relative" 
+      className="min-h-screen flex flex-col items-center justify-center py-20 relative"
       id="Contact"
     >
       <div className="w-full max-w-4xl mb-16 text-center">
@@ -58,7 +65,7 @@ const Contact = () => {
       </div>
 
       <div className="w-full max-w-5xl px-6 grid grid-cols-1 lg:grid-cols-5 gap-8">
-        
+
         {/* Left Side: Contact Info Badges (2/5 columns) */}
         <div className="lg:col-span-2 space-y-6 flex flex-col justify-between">
           <div className="space-y-6">
@@ -66,7 +73,7 @@ const Contact = () => {
               Discutons de vos projets !
             </h3>
             <p className="text-sm sm:text-base text-foreground/75 font-light leading-relaxed">
-              Que ce soit pour un site web personnalisé, une application mobile avec Flutter ou une assistance technique générale, je suis à votre disposition.
+              Que ce soit pour un site web personnalisé, une application mobile, de l'administration système ou une assistance technique générale, je suis à votre disposition.
             </p>
           </div>
 
@@ -75,7 +82,9 @@ const Contact = () => {
             {/* Email Badge */}
             <motion.a
               whileHover={{ scale: 1.02, x: 5 }}
-              href="mailto:traorejie4@gmail.com"
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${siteConfig.email}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] dark:bg-black/15 border border-white/5 hover:border-accent/30 transition-all duration-300"
             >
               <div className="w-11 h-11 rounded-xl bg-accent/15 border border-accent/20 flex items-center justify-center text-accent">
@@ -83,14 +92,14 @@ const Contact = () => {
               </div>
               <div>
                 <p className="text-xs text-muted-foreground font-semibold">Envoyez-moi un email</p>
-                <p className="text-sm font-bold text-foreground">traorejie4@gmail.com</p>
+                <p className="text-sm font-bold text-foreground">{siteConfig.email}</p>
               </div>
             </motion.a>
 
             {/* Direct LinkedIn */}
             <motion.a
               whileHover={{ scale: 1.02, x: 5 }}
-              href="https://linkedin.com/in/jie-traore"
+              href={siteConfig.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] dark:bg-black/15 border border-white/5 hover:border-accent/30 transition-all duration-300"
@@ -100,7 +109,7 @@ const Contact = () => {
               </div>
               <div>
                 <p className="text-xs text-muted-foreground font-semibold">Réseau Professionnel</p>
-                <p className="text-sm font-bold text-foreground">Jie Traoré</p>
+                <p className="text-sm font-bold text-foreground">{siteConfig.name}</p>
               </div>
             </motion.a>
           </div>
@@ -112,7 +121,7 @@ const Contact = () => {
               <motion.a
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.9 }}
-                href="https://github.com/koukson"
+                href={siteConfig.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-11 h-11 rounded-xl bg-white/[0.05] dark:bg-black/20 border border-white/10 hover:border-accent/40 flex items-center justify-center text-foreground hover:text-accent transition-all duration-300"
@@ -122,7 +131,7 @@ const Contact = () => {
               <motion.a
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.9 }}
-                href="https://linkedin.com/in/jie-traore"
+                href={siteConfig.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-11 h-11 rounded-xl bg-white/[0.05] dark:bg-black/20 border border-white/10 hover:border-accent/40 flex items-center justify-center text-foreground hover:text-accent transition-all duration-300"
@@ -132,7 +141,9 @@ const Contact = () => {
               <motion.a
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.9 }}
-                href="mailto:traorejie4@gmail.com"
+                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${siteConfig.email}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-11 h-11 rounded-xl bg-white/[0.05] dark:bg-black/20 border border-white/10 hover:border-accent/40 flex items-center justify-center text-foreground hover:text-accent transition-all duration-300"
               >
                 <Mail className="w-5 h-5" />
@@ -149,7 +160,7 @@ const Contact = () => {
           >
             {/* Success Message Banner */}
             {showSuccess && (
-              <motion.div 
+              <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 className="p-4 bg-green-500/10 border border-green-500/20 rounded-2xl text-green-400 text-center font-semibold text-sm"
@@ -244,7 +255,7 @@ const Contact = () => {
               ) : (
                 <>
                   <Send className="w-4 h-4 text-white" />
-                  Envoyer le message
+                  Envoyer le message  ( pas dispo!!)
                 </>
               )}
             </motion.button>

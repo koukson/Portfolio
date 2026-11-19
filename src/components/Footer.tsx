@@ -1,6 +1,7 @@
 import { Container, Linkedin, Mail, Github, ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { siteConfig } from "../data/siteConfig";
 
 const Footer = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,16 +33,16 @@ const Footer = () => {
     >
       {/* Visual Ambient Decorative Circles */}
       <div className="absolute inset-0 pointer-events-none">
-        <div 
+        <div
           className="absolute top-1/2 left-[-10%] w-72 h-72 rounded-full bg-accent/5 blur-3xl"
         />
-        <div 
+        <div
           className="absolute bottom-[-10%] right-[-10%] w-72 h-72 rounded-full bg-primary-custom/5 blur-3xl"
         />
       </div>
 
       <footer className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center justify-center relative z-10 space-y-6">
-        
+
         {/* Rotating & Pulsating Logo block */}
         <motion.div
           whileHover={{ scale: 1.08 }}
@@ -57,14 +58,16 @@ const Footer = () => {
         {/* Text Details */}
         <div className="text-center space-y-2">
           <h2 className="text-xl font-black text-foreground tracking-wider flex items-center justify-center gap-1.5">
-            <span className="text-accent">JT</span>
-            <span className="text-[10px] text-muted-foreground bg-white/5 border border-white/10 px-2 py-0.5 rounded-lg font-bold tracking-widest uppercase">DEV</span>
+            <span className="text-accent">{siteConfig.shortName}</span>
+            <span className="text-[10px] text-muted-foreground bg-white/5 border border-white/10 px-2 py-0.5 rounded-lg font-bold tracking-widest uppercase">
+              {siteConfig.name.split("DEV ")[1] || "DEV"}
+            </span>
           </h2>
           <p className="text-xs sm:text-sm text-muted-foreground/80 font-light max-w-sm">
-            Développeur Full-Stack junior passionné par les technologies modernes et l'innovation logicielle.
+            {siteConfig.footerTagline}
           </p>
           <p className="text-[11px] text-muted-foreground/50 pt-2 font-mono">
-            © {new Date().getFullYear()} Jie Traoré. Tous droits réservés.
+            © {new Date().getFullYear()} {siteConfig.name}. Tous droits réservés.
           </p>
         </div>
 
@@ -73,7 +76,7 @@ const Footer = () => {
           <motion.a
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.9 }}
-            href="https://github.com/koukson"
+            href={siteConfig.github}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center w-10 h-10 bg-white/[0.03] hover:bg-white/[0.08] dark:bg-black/20 dark:hover:bg-black/35 border border-white/10 rounded-xl text-muted-foreground hover:text-accent transition-all duration-300"
@@ -83,7 +86,7 @@ const Footer = () => {
           <motion.a
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.9 }}
-            href="https://linkedin.com/in/jie-traore"
+            href={siteConfig.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center w-10 h-10 bg-white/[0.03] hover:bg-white/[0.08] dark:bg-black/20 dark:hover:bg-black/35 border border-white/10 rounded-xl text-muted-foreground hover:text-accent transition-all duration-300"
@@ -93,7 +96,9 @@ const Footer = () => {
           <motion.a
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.9 }}
-            href="mailto:traorejie4@gmail.com"
+            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${siteConfig.email}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center justify-center w-10 h-10 bg-white/[0.03] hover:bg-white/[0.08] dark:bg-black/20 dark:hover:bg-black/35 border border-white/10 rounded-xl text-muted-foreground hover:text-accent transition-all duration-300"
           >
             <Mail className="w-4.5 h-4.5" />
